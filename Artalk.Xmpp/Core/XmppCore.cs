@@ -698,16 +698,17 @@ namespace Artalk.Xmpp.Core {
 		/// rejected by the server, or the server requires TLS/SSL and TLS has been
 		/// turned off.</exception>
 		void SetupConnection(string resource = null) {
+			XmlElement feats;
 			// Request the initial stream.
-			XmlElement feats = InitiateStream(Hostname);
-			// Server supports TLS/SSL via STARTTLS.
-			if (feats["starttls"] != null) {
-				// TLS is mandatory and user opted out of it.
-				if (feats["starttls"]["required"] != null && Tls == false)
-					throw new AuthenticationException("The server requires TLS/SSL.");
-				if(Tls)
+   			//XmlElement feats = InitiateStream(Hostname);
+			//// Server supports TLS/SSL via STARTTLS.
+			//if (feats["starttls"] != null) {
+			//	// TLS is mandatory and user opted out of it.
+			//	if (feats["starttls"]["required"] != null && Tls == false)
+			//		throw new AuthenticationException("The server requires TLS/SSL.");
+			//	if(Tls)
 					feats = StartTls(Hostname, Validate);
-			}
+			//}
 			// If no Username has been provided, don't perform authentication.
 			if (Username == null)
 				return;
@@ -785,8 +786,8 @@ namespace Artalk.Xmpp.Core {
 		XmlElement StartTls(string hostname,
 			RemoteCertificateValidationCallback validate) {
 			// Send STARTTLS command and ensure the server acknowledges the request.
-			SendAndReceive(Xml.Element("starttls",
-				"urn:ietf:params:xml:ns:xmpp-tls"), "proceed");
+			//SendAndReceive(Xml.Element("starttls",
+			//	"urn:ietf:params:xml:ns:xmpp-tls"), "proceed");
 			// Complete TLS negotiation and switch to secure stream.
 			SslStream sslStream = new SslStream(stream, false, validate ??
 				((sender, cert, chain, err) => true));
