@@ -92,14 +92,17 @@ namespace Artalk.Xmpp.Core {
 		/// </summary>
 		CancellationTokenSource cancelDispatch = new CancellationTokenSource();
 
-		/// <summary>
-		/// The hostname of the XMPP server to connect to.
-		/// </summary>
-		/// <exception cref="ArgumentNullException">The Hostname property is being
-		/// set and the value is null.</exception>
-		/// <exception cref="ArgumentException">The Hostname property is being set
-		/// and the value is the empty string.</exception>
-		public string Hostname {
+    public event IqX43EventHandler IqX43;
+    public delegate void IqX43EventHandler(string s);
+
+    /// <summary>
+    /// The hostname of the XMPP server to connect to.
+    /// </summary>
+    /// <exception cref="ArgumentNullException">The Hostname property is being
+    /// set and the value is null.</exception>
+    /// <exception cref="ArgumentException">The Hostname property is being set
+    /// and the value is the empty string.</exception>
+    public string Hostname {
 			get {
 				return hostname;
 			}
@@ -234,26 +237,31 @@ namespace Artalk.Xmpp.Core {
 		/// </summary>
 		public event EventHandler<PresenceEventArgs> Presence;
 
-		/// <summary>
-		/// Initializes a new instance of the XmppCore class.
-		/// </summary>
-		/// <param name="hostname">The hostname of the XMPP server to connect to.</param>
-		/// <param name="username">The username with which to authenticate. In XMPP jargon
-		/// this is known as the 'node' part of the JID.</param>
-		/// <param name="password">The password with which to authenticate.</param>
-		/// <param name="port">The port number of the XMPP service of the server.</param>
-		/// <param name="tls">If true the session will be TLS/SSL-encrypted if the server
-		/// supports TLS/SSL-encryption.</param>
-		/// <param name="validate">A delegate used for verifying the remote Secure Sockets
-		/// Layer (SSL) certificate which is used for authentication. Can be null if not
-		/// needed.</param>
-		/// <exception cref="ArgumentNullException">The hostname parameter or the
-		/// username parameter or the password parameter is null.</exception>
-		/// <exception cref="ArgumentException">The hostname parameter or the username
-		/// parameter is the empty string.</exception>
-		/// <exception cref="ArgumentOutOfRangeException">The value of the port parameter
-		/// is not a valid port number.</exception>
-		public XmppCore(string hostname, string username, string password,
+    public void OnIqX43(string s)
+    {
+      IqX43?.Invoke(s);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the XmppCore class.
+    /// </summary>
+    /// <param name="hostname">The hostname of the XMPP server to connect to.</param>
+    /// <param name="username">The username with which to authenticate. In XMPP jargon
+    /// this is known as the 'node' part of the JID.</param>
+    /// <param name="password">The password with which to authenticate.</param>
+    /// <param name="port">The port number of the XMPP service of the server.</param>
+    /// <param name="tls">If true the session will be TLS/SSL-encrypted if the server
+    /// supports TLS/SSL-encryption.</param>
+    /// <param name="validate">A delegate used for verifying the remote Secure Sockets
+    /// Layer (SSL) certificate which is used for authentication. Can be null if not
+    /// needed.</param>
+    /// <exception cref="ArgumentNullException">The hostname parameter or the
+    /// username parameter or the password parameter is null.</exception>
+    /// <exception cref="ArgumentException">The hostname parameter or the username
+    /// parameter is the empty string.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The value of the port parameter
+    /// is not a valid port number.</exception>
+    public XmppCore(string hostname, string username, string password,
 			int port = 5222, bool tls = true, RemoteCertificateValidationCallback validate = null) {
 				Hostname = hostname;
 				Username = username;
@@ -919,7 +927,7 @@ namespace Artalk.Xmpp.Core {
 		/// <exception cref="ArgumentNullException">The xml parameter is null.</exception>
 		/// <exception cref="IOException">There was a failure while writing to
 		/// the network.</exception>
-		void Send(string xml) {
+		public void Send(string xml) {
 			xml.ThrowIfNull("xml");
 			// XMPP is guaranteed to be UTF-8.
 			byte[] buf = Encoding.UTF8.GetBytes(xml);
@@ -1031,6 +1039,10 @@ namespace Artalk.Xmpp.Core {
 		/// <param name="iq">The received IQ response stanza.</param>
 		void HandleIqResponse(Iq iq) {
 			string id = iq.Id;
+
+      if (id == "x43")
+        OnIqX43(iq.ToString());
+
 			AutoResetEvent ev;
 			Action<string, Iq> cb;
 			iqResponses[id] = iq;

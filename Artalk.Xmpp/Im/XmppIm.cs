@@ -160,11 +160,14 @@ namespace Artalk.Xmpp.Im {
 			set;
 		}
 
-		/// <summary>
-		/// The event that is raised when a status notification from a contact has been
-		/// received.
-		/// </summary>
-		public event EventHandler<StatusEventArgs> Status;
+    public event IqX43EventHandler IqX43;
+    public delegate void IqX43EventHandler(string s);
+
+    /// <summary>
+    /// The event that is raised when a status notification from a contact has been
+    /// received.
+    /// </summary>
+    public event EventHandler<StatusEventArgs> Status;
 
 		/// <summary>
 		/// The event that is raised when a chat message is received.
@@ -416,6 +419,15 @@ namespace Artalk.Xmpp.Im {
 			}
 			core.SendMessage(message);
 		}
+
+    /// <summary>
+    /// Sends a xml message
+    /// </summary>
+    /// <param name="xml"></param>
+    public void SendXml(string xml)
+    {
+      core.Send(xml);
+    }
 
 		/// <summary>
 		/// Sends a request to subscribe to the presence of the contact with the
@@ -1376,7 +1388,8 @@ namespace Artalk.Xmpp.Im {
 		/// </summary>
 		void SetupEventHandlers() {
 			core.Iq += (sender, e) => { OnIq(e.Stanza); };
-			core.Presence += (sender, e) => {
+      core.IqX43 += (result) => { OnIqX43(result); };
+      core.Presence += (sender, e) => {
 				// FIXME: Raise Error event if constructor raises exception?
 				OnPresence(new Presence(e.Stanza));
 			};
@@ -1434,11 +1447,16 @@ namespace Artalk.Xmpp.Im {
 			IqError(iq, ErrorType.Cancel, ErrorCondition.FeatureNotImplemented);
 		}
 
-		/// <summary>
-		/// Callback invoked when a presence stanza has been received.
-		/// </summary>
-		/// <param name="presence">The received presence stanza.</param>
-		void OnPresence(Presence presence) {
+    public void OnIqX43(string s)
+    {
+      IqX43?.Invoke(s);
+    }
+
+    /// <summary>
+    /// Callback invoked when a presence stanza has been received.
+    /// </summary>
+    /// <param name="presence">The received presence stanza.</param>
+    void OnPresence(Presence presence) {
 			// Invoke IInput<Presence> Plugins.
 			foreach (var ext in extensions) {
 				var filter = ext as IInputFilter<Presence>;

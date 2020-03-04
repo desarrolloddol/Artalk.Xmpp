@@ -316,10 +316,25 @@ namespace Artalk.Xmpp.Client {
 			}
 		}
 
-		/// <summary>
-		/// The event that is raised when a chat message is received.
-		/// </summary>
-		public event EventHandler<MessageEventArgs> Message {
+    /// <summary>
+    /// The event that is raised when a IQ43 response is received
+    /// </summary>
+    public event XmppIm.IqX43EventHandler IqX43
+    {
+      add
+      {
+        im.IqX43 += value;
+      }
+      remove
+      {
+        im.IqX43 -= value;
+      }
+    }
+
+    /// <summary>
+    /// The event that is raised when a chat message is received.
+    /// </summary>
+    public event EventHandler<MessageEventArgs> Message {
 			add {
 				im.Message += value;
 			}
@@ -560,6 +575,14 @@ namespace Artalk.Xmpp.Client {
 			body.ThrowIfNullOrEmpty("body");
 			im.SendMessage(to, body, subject, thread, type, language);
 		}
+
+    /// <summary>
+    /// Sends a xml message
+    /// </summary>
+    public void SendXml(string xml)
+    {
+      im.SendXml(xml);
+    }
 
 		/// <summary>
 		/// Sends a chat message with the specified content to the specified JID.
