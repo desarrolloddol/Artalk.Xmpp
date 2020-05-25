@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\FileTransferSettings.cs" />
     <Compile Include="Client\ArtalkXmppClient.cs" />
     <Compile Include="Core\ErrorEventArgs.cs" />
     <Compile Include="Extensions\XEP-0004\DataForms.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="Extensions\XEP-0020\FeatureNegotiation.cs" />
     <Compile Include="Extensions\XEP-0030\Item.cs" />
     <Compile Include="Extensions\XEP-0065\IPAddressExtensions.cs" />
-    <Compile Include="Extensions\XEP-0065\Socks5Bytestreams.cs" />
     <Compile Include="Extensions\XEP-0065\Socks5\ATyp.cs" />
     <Compile Include="Extensions\XEP-0065\Socks5\AuthMethod.cs" />
     <Compile Include="Extensions\XEP-0065\Socks5\AuthRequest.cs" />
@@ -94,8 +92,6 @@
     <Compile Include="Extensions\XEP-0065\Stun\BindingRequest.cs" />
     <Compile Include="Extensions\XEP-0065\Stun\BindingResponse.cs" />
     <Compile Include="Extensions\XEP-0065\Stun\StunClient.cs" />
-    <Compile Include="Extensions\XEP-0065\UPnP\DeviceFinderCallback.cs" />
-    <Compile Include="Extensions\XEP-0065\UPnP\UPnP.cs" />
     <Compile Include="Extensions\XEP-0077\InBandRegistration.cs" />
     <Compile Include="Extensions\XEP-0077\RegistrationCallback.cs" />
     <Compile Include="Extensions\XEP-0085\ChatState.cs" />
@@ -194,17 +190,6 @@
     <Compile Include="Util.cs" />
     <Compile Include="XmppError.cs" />
     <Compile Include="XmppErrorException.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="UPNPLib">
-      <Guid>{DB3442A7-A2E9-4A59-9CB5-F5C1A5D901E5}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client\Examples.xml" />

@@ -41,7 +41,7 @@ namespace Artalk.Xmpp.Extensions {
 		/// we must support SOCKS5 and In-Band Bytestreams.
 		/// </summary>
 		static readonly Type[] supportedMethods = new Type[] {
-			typeof(Socks5Bytestreams),
+			//typeof(Socks5Bytestreams),
 			typeof(InBandBytestreams)
 		};
 
