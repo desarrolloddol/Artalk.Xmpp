@@ -100,8 +100,6 @@
     <Compile Include="Extensions\XEP-0085\ChatStateNotifications.cs" />
     <Compile Include="Extensions\XEP-0096\BytesTransferredEventArgs.cs" />
     <Compile Include="Extensions\XEP-0047\InBandBytestreams.cs" />
-    <Compile Include="Extensions\XEP-0084\AvatarChangedEventArgs.cs" />
-    <Compile Include="Extensions\XEP-0084\UserAvatar.cs" />
     <Compile Include="Extensions\XEP-0095\InitiationResult.cs" />
     <Compile Include="Extensions\XEP-0095\StreamInitiation.cs" />
     <Compile Include="Extensions\XEP-0096\FileMetaData.cs" />

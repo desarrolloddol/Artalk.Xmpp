@@ -64,10 +64,12 @@ namespace Artalk.Xmpp.Client
     /// Provides access to the 'User Tune' XMPP extension functionality.
     /// </summary>
     UserTune userTune;
+#if !__ANDROID__
     /// <summary>
     /// Provides access to the 'User Avatar' XMPP extension functionality.
     /// </summary>
     UserAvatar userAvatar;
+#endif
     /// <summary>
     /// Provides access to the 'User Mood' XMPP extension functionality.
     /// </summary>
@@ -333,7 +335,7 @@ namespace Artalk.Xmpp.Client
         userActivity.ActivityChanged -= value;
       }
     }
-
+#if !__ANDROID__
     /// <summary>
     /// The event that is raised when a contact has updated his or her avatar.
     /// </summary>
@@ -348,7 +350,7 @@ namespace Artalk.Xmpp.Client
         userAvatar.AvatarChanged -= value;
       }
     }
-
+#endif
     /// <summary>
     /// The event that is raised when a contact has published tune information.
     /// </summary>
@@ -904,7 +906,7 @@ namespace Artalk.Xmpp.Client
       item.ThrowIfNull("item");
       im.RemoveFromRoster(item);
     }
-
+#if !__ANDROID__
     /// <summary>
     /// Publishes the image located at the specified path as the user's avatar.
     /// </summary>
@@ -949,7 +951,7 @@ namespace Artalk.Xmpp.Client
       filePath.ThrowIfNull("filePath");
       userAvatar.Publish(filePath);
     }
-
+#endif
     /// <summary>
     /// Sets the user's mood to the specified mood value.
     /// </summary>
@@ -1587,7 +1589,9 @@ namespace Artalk.Xmpp.Client
       block = im.LoadExtension<BlockingCommand>();
       pep = im.LoadExtension<Pep>();
       userTune = im.LoadExtension<UserTune>();
+#if !__ANDROID__
       userAvatar = im.LoadExtension<UserAvatar>();
+#endif
       userMood = im.LoadExtension<UserMood>();
       dataForms = im.LoadExtension<DataForms>();
       featureNegotiation = im.LoadExtension<FeatureNegotiation>();
