@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Artalk.WinClient</RootNamespace>
     <AssemblyName>Artalk.WinClient</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,10 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DDOL.Data">
+      <HintPath>..\..\..\DLL\DDOL.Data\Net45\x86\1.0.1.0\DDOL.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -46,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\dotnet\DDOL.Eepda\DDOL.Eepda.Server\DDOL.Eepda.Server.Shared\MongooseIMMessagesBody.cs">
+      <Link>MongooseIMMessagesBody.cs</Link>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +72,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -80,6 +88,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\dotnet\DDOL.Eepda\DDOL.Eepda.Client\DDOL.Eepda.Client.Net45.x86.csproj">
+      <Project>{13b4a681-4fa1-4e34-931b-971eb74f76ee}</Project>
+      <Name>DDOL.Eepda.Client.Net45.x86</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\dotnet\DDOL.WebService\DDOL.WebService.Client\DDOL.WebService.Client.Net45.x86.csproj">
+      <Project>{18501daf-d2cb-40a7-81f1-4000ddb1bb52}</Project>
+      <Name>DDOL.WebService.Client.Net45.x86</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Artalk.Xmpp\Artalk.Xmpp.csproj">
       <Project>{9ea99e39-8c5c-4f69-9f3f-8e3074c518fa}</Project>
       <Name>Artalk.Xmpp</Name>
